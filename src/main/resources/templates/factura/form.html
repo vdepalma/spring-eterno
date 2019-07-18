@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+	<div class="container py-4">
+		<h1 th:text="${titulo}"></h1>
+		<div class="card">
+			<div class="card-header text-white bg-warning mb-3" th:text="'Factura a nombre de '+ ${factura.cliente.toString()}"></div>
+			<div class="card-body">
+				<form th:action="@{/factura/form/}" th:object="${factura}" method="POST">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Descripción" th:field="*{descripcion}" th:errorclass="'form-control is-invalid'"  />
+						<div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" placeholder="Observaciones" th:field="*{observacion}"></textarea>
+					</div>
+					<div class="form-group">
+						<input type="text" placeholder="Buscar Producto" name="buscar-producto" id="buscar-producto" class="form-control" />
+					</div>
+					<table th:replace="factura/plantilla-items :: itemsFactura"></table>
+
+					<table id="cargarItemsProductos" class="table table-sm table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Precio</th>
+								<th>Cantidad</th>
+								<th>Total</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+					<h5>
+						Total: <span class="badge badge-warning" id="gran_total">0</span>
+					</h5>
+					<div class="button-group" align="right">
+						<a th:href="@{/listar}" class="btn btn-light">Volver</a> <input type="submit" class="btn btn-primary" th:value="${titulo}" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+	<script type="text/javascript" th:replace="factura/js/autocomplete-productos :: javascript"></script>
+</body>
+</html>

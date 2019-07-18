@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+	<div class="container">
+		<div class="card">
+			<div class="card-body text-center">
+				<h1><span class="badge badge-warning">403</span>  No puede ver esta página</h1>
+				<h2>Acceso denegado</h2>
+				<a th:href="@{/}" class="btn btn-link"> Volver al inicio</a>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

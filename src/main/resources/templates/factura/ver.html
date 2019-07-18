@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+	<div class="container">
+		<div class="card">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col" th:text=${factura.observacion}></div>
+					<div class="col" style="text-align: right" th:text=${factura.createAt}></div>
+				</div>
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-3 text-right">
+								<p>
+									<strong> Nombre del cliente: </strong>
+								</p>
+							</div>
+							<div class="col-md-9">
+								<p th:text="${factura.cliente.toString()}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 text-right">
+								<p>
+									<strong> Email: </strong>
+								</p>
+							</div>
+							<div class="col-md-9">
+								<p th:text="${factura.cliente.email}" />
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div>
+					<table class="table table-bordered table-striped my-4">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Precio</th>
+								<th>Cantidad</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item : ${factura.items}">
+								<td th:text=${item.producto.nombre}></td>
+								<td th:text=${item.producto.precio}></td>
+								<td th:text=${item.cantidad}></td>
+								<td th:text=${item.calcularImporte()}></td>
+							</tr>
+						</tbody>
+					</table>
+					<div style="text-align: right;">
+						<h5>
+							<span class="badge badge-warning" th:text="${factura.getTotal()}"></span>
+						</h5>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col" style="text-align: right;">
+						<a th:href="@{'/ver/'}+${factura.cliente.id}" class="btn btn-light">Volver</a>
+						<a th:href="@{'factura/ver/'+${factura.id}(format=pdf)}" class="btn btn-danger btn-xs ">PDF</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
